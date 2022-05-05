@@ -5,7 +5,7 @@
 class Stroka { 
 protected:
     int len;    //длина строки в байтах
-    char* pCh; //указатель на массив символов
+    char* ptrChar; //указатель на массив символов
 public:
     Stroka(int = 0);//получение длины строки
     Stroka(char);
@@ -14,7 +14,7 @@ public:
     virtual ~Stroka(); //деструктор
     char* GetStr(void)const { 
 
-        return pCh;
+        return ptrChar;
     }
     int GetLen(void)const { 
         return len;

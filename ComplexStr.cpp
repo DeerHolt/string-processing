@@ -18,16 +18,16 @@ ComplexStr::ComplexStr(const char* str) : Stroka(str) {
     string s = str;
     if (regex_match(s, regex("[+-]?\\d+.?\\d*i[+-]?\\d+.?\\d*"))) {
         for (int i = 0; i < len1; i++) {
-            pCh[i] = s[i];
+            ptrChar[i] = s[i];
         }
-        pCh[len1] = '\0';
+        ptrChar[len1] = '\0';
     }
     else {
-        if (pCh) {
-            delete[] pCh;
+        if (ptrChar) {
+            delete[] ptrChar;
             len = 0;
-            pCh = new char[len + 1];
-            pCh[0] = '\0';
+            ptrChar = new char[len + 1];
+            ptrChar[0] = '\0';
         }
         return;
     }
@@ -44,10 +44,10 @@ ComplexStr:: ~ComplexStr() {
 
 ComplexStr& ComplexStr:: operator= (const ComplexStr& CS) {
     if (&CS != this) {
-        delete[] pCh;
-        len = strlen(CS.pCh);
-        pCh = new char[len + 1];
-        strcpy_s(pCh, len + 1, CS.pCh);
+        delete[] ptrChar;
+        len = strlen(CS.ptrChar);
+        ptrChar = new char[len + 1];
+        strcpy_s(ptrChar, len + 1, CS.ptrChar);
     }
     cout << "ComplexStr& ComplexStr:: operator= (const ComplexStr& CS)" << endl;
     return *this;
@@ -57,21 +57,21 @@ double ComplexStr::Get_real() const {
     int i = 0, t = 0;
     double real = 0;
     int sign_re = 1;
-    if (pCh[0] == '-') {
+    if (ptrChar[0] == '-') {
         sign_re = -1;
         i++;
     }
-    if (pCh[0] == '+') i++;
-    while (pCh[i] != 'i' && pCh[i] != '.') {
+    if (ptrChar[0] == '+') i++;
+    while (ptrChar[i] != 'i' && ptrChar[i] != '.') {
         real *= 10;
-        real += (static_cast<int>(pCh[i]) - 48);
+        real += (static_cast<int>(ptrChar[i]) - 48);
         i++;
     }
-    if (pCh[i] == '.') {
+    if (ptrChar[i] == '.') {
         i++;
-        while (pCh[i] != 'i') {
+        while (ptrChar[i] != 'i') {
             real *= 10;
-            real += (static_cast<int>(pCh[i]) - 48);
+            real += (static_cast<int>(ptrChar[i]) - 48);
             i++;
             t++;
         }
@@ -87,25 +87,25 @@ double ComplexStr::Get_imaginary() const {
     int i = 0, t = 0;
     double imaginary = 0;
     int sign_im = 1;
-    while (pCh[i] != 'i') {
+    while (ptrChar[i] != 'i') {
         i++;
     }
     i++;
-    if (pCh[i] == '-') {
+    if (ptrChar[i] == '-') {
         sign_im = -1;
         i++;
     }
-    if (pCh[i] == '+') i++;
-    while (pCh[i] != '.' && pCh[i] != '\0') {
+    if (ptrChar[i] == '+') i++;
+    while (ptrChar[i] != '.' && ptrChar[i] != '\0') {
         imaginary *= 10;
-        imaginary += (static_cast<int>(pCh[i]) - 48);
+        imaginary += (static_cast<int>(ptrChar[i]) - 48);
         i++;
     }
-    if (pCh[i] == '.') {
+    if (ptrChar[i] == '.') {
         i++;
-        while (pCh[i] != '\0') {
+        while (ptrChar[i] != '\0') {
             imaginary *= 10;
-            imaginary += (static_cast<int>(pCh[i]) - 48);
+            imaginary += (static_cast<int>(ptrChar[i]) - 48);
             i++;
             t++;
         }
@@ -136,19 +136,19 @@ ComplexStr operator* (const ComplexStr& left, const ComplexStr& right) {
     }
     int i = 0, j = 0;
     res.len = real.length() + im.length() + 1;
-    delete[] res.pCh;
-    res.pCh = new char[res.len + 2];
+    delete[] res.ptrChar;
+    res.ptrChar = new char[res.len + 2];
     while (real[i] != '\0') {
-        res.pCh[i] = real[i];
+        res.ptrChar[i] = real[i];
         i++;
     }
-    res.pCh[i] = 'i';
+    res.ptrChar[i] = 'i';
     i++;
     while (im[j] != '\0') {
-        res.pCh[i + j] = im[j];
+        res.ptrChar[i + j] = im[j];
         j++;
     }
-    res.pCh[i + j] = '\0';
+    res.ptrChar[i + j] = '\0';
     cout << i + j << " " << res.GetLen() << endl;
     return res;
 }
